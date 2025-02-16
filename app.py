@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify
 from urllib.parse import quote_plus
 from pymongo import MongoClient
 import requests
-
+import os
 username = "deltatraderskp"
 password = "787898@pP"
 
@@ -114,6 +114,8 @@ def check_answer():
 import ssl
 print(ssl.OPENSSL_VERSION)
 
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5005)
+
+    # Prevent infinite loop in Streamlit
+    if os.getenv("WERKZEUG_RUN_MAIN") == "true":
+        app.run(host='0.0.0.0', port=5005, debug=True)
